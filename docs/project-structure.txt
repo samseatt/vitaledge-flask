@@ -1,0 +1,27 @@
+# Project Structure
+#
+vitaledge_flask_ui/
+├── app/
+│   ├── templates/               # HTML templates for rendering views
+│   │   ├── study.html           # Template for displaying a study
+│   │   ├── studies.html         # Template for displaying all studies for a subject
+│   │   ├── subjects.html        # Template for displaying all subjects with studies
+│   │   ├── variant.html         # Template for displaying a single variant
+│   │   └── variants.html        # Template for displaying and searching variants
+│   ├── static/                  # Static files (CSS, JS, images)
+│   ├── routes/                  # Flask routes
+│   │   ├── __init__.py          # Route initializer
+│   │   ├── studies.py           # Routes for study-related views
+│   │   └── variants.py          # Routes for variant-related views
+│   ├── utils/                   # Utility functions
+│   │   └── serializers.py       # Serializers for MongoDB data
+│   ├── services/                # Business logic services
+│   │   └── studies_service.py   # Service for study handling
+│   ├── config.py                # Application configuration
+│   ├── main.py                  # Main entry point for the Flask app
+│   ├── database.py              # MongoDB connection setup
+│   └── forms.py                 # Forms for data entry
+├── requirements.in              # Base dependencies
+├── requirements.txt             # Compiled dependencies
+└── README.md                    # Project documentation
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variants for Subject {{ subject_id }}</title>
+</head>
+<body>
+    <h1>Variants for Subject {{ subject_id }}</h1>
+    <form method="POST" action="{{ url_for('variants.search_variants', subject_id=subject_id) }}">
+        <h3>Search by rsID</h3>
+        <input type="hidden" name="search_type" value="rsid">
+        <label for="rsID">rsID:</label>
+        <input type="text" id="rsID" name="rsID" required>
+        <button type="submit">Search</button>
+    </form>
+
+    <form method="POST" action="{{ url_for('variants.search_variants', subject_id=subject_id) }}">
+        <h3>Search by Chromosome and Position Range</h3>
+        <input type="hidden" name="search_type" value="chromosome_range">
+        <label for="chromosome">Chromosome:</label>
+        <input type="text" id="chromosome" name="chromosome" required>
+        <label for="start_position">Start Position:</label>
+        <input type="number" id="start_position" name="start_position" required>
+        <label for="end_position">End Position:</label>
+        <input type="number" id="end_position" name="end_position" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
+    {% if variants %}
+    <h3>Results</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>rsID</th>
+                <th>Chromosome</th>
+                <th>Position</th>
+                <th>Reference Allele</th>
+                <th>Variant Allele</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for variant in variants %}
+            <tr>
+                <td><a href="{{ url_for('variants.get_variant_by_id', subject_id=subject_id, variant_id=variant._id) }}">{{ variant.rsID }}</a></td>
+                <td>{{ variant.chromosome }}</td>
+                <td>{{ variant.position }}</td>
+                <td>{{ variant.reference_allele }}</td>
+                <td>{{ variant.variant_allele }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</body>
+</html>

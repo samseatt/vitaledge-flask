@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Studies for Subject {{ subject_id }}</title>
+</head>
+<body>
+    <h1>Studies for Subject {{ subject_id }}</h1>
+    <ul>
+        {% for study in studies %}
+        <li>
+            <a href="{{ url_for('studies.get_study', subject_id=subject_id, study_id=study._id) }}">
+                {{ study.study.name }} (Score: {{ study.score.percentile }})
+            </a>
+            - <a href="{{ study.study.url }}" target="_blank">View Study</a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <h2>Add a New Study</h2>
+    <form method="POST">
+        <label for="study_url">Study URL:</label>
+        <input type="url" id="study_url" name="study_url"><br><br>
+
+        <label for="study_content">Study Content:</label><br>
+        <textarea id="study_content" name="study_content" rows="10" cols="50" required></textarea><br><br>
+
+        <button type="submit">Add Study</button>
+    </form>
+
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

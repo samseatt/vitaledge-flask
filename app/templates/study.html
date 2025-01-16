@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study Details</title>
+</head>
+<body>
+    <h1>Study Details</h1>
+    <h2>{{ study.study.name }}</h2>
+    <p><strong>Summary:</strong> {{ study.study.summary }}</p>
+    <p><strong>Description:</strong> {{ study.study.description }}</p>
+    <p><strong>Source URL:</strong> <a href="{{ study.study.url }}">{{ study.study.url }}</a></p>
+
+    <h3>Tags</h3>
+    <ul>
+        {% for tag in study.study.tags %}
+        <li>{{ tag }}</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Score</h3>
+    <p><strong>Percentile:</strong> {{ study.score.percentile }}</p>
+    <p><strong>Genetic Score:</strong> {{ study.score['genetic-score'] }}</p>
+
+    <h3>Variants</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Variant</th>
+                <th>Genotype</th>
+                <th>Effect Size</th>
+                <th>Frequency</th>
+                <th>Significance</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for variant in study.variants %}
+            <tr>
+                <td>{{ variant.variant }}</td>
+                <td>{{ variant.genotype }}</td>
+                <td>{{ variant['effect-size'] }}</td>
+                <td>{{ variant['variant-frequency'] }}</td>
+                <td>{{ variant.significance }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

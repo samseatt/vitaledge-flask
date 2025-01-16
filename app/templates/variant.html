@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variant Details</title>
+</head>
+<body>
+    <h1>Variant Details</h1>
+    <h2>{{ variant.rsID }}</h2>
+    <p><strong>Chromosome:</strong> {{ variant.chromosome }}</p>
+    <p><strong>Position:</strong> {{ variant.position }}</p>
+    <p><strong>Reference Allele:</strong> {{ variant.reference_allele }}</p>
+    <p><strong>Variant Allele:</strong> {{ variant.variant_allele }}</p>
+    <h3>Info</h3>
+    <ul>
+        {% for key, value in variant.info.items() %}
+        <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
