@@ -1,0 +1,98 @@
+/* Apply to all elements */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+a {
+    color: #4682B4;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    color: #2F4F4F;
+    margin-bottom: 1rem;
+}
+
+h2, h3, h4, h5, h6 {
+    color: #2F4F4F;
+    margin-bottom: 1rem;
+}
+
+p {
+    margin: 0 0 1rem;
+}
+
+ul {
+    padding-left: 1.5rem;
+    margin: 0 0 1rem;
+}
+
+li {
+    margin: 0.5rem 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+table th {
+    background-color: #f1f1f1;
+}
+
+button {
+    background-color: #2F4F4F;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #4682B4;
+}
+
+textarea, input {
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Add padding and centering for the main container */
+.container {
+    padding: 1rem;
+    max-width: 800px;
+    margin: auto;
+}
+
+/* Error messages */
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+/* Success messages */
+.success {
+    color: green;
+    font-weight: bold;
+}

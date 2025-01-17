@@ -9,6 +9,7 @@ vitaledge_flask_ui/
 │   │   ├── variant.html         # Template for displaying a single variant
 │   │   └── variants.html        # Template for displaying and searching variants
 │   ├── static/                  # Static files (CSS, JS, images)
+│   │   └── style.css            # Generic stylesheet for all HTML templates
 │   ├── routes/                  # Flask routes
 │   │   ├── __init__.py          # Route initializer
 │   │   ├── studies.py           # Routes for study-related views
@@ -24,4 +25,3 @@ vitaledge_flask_ui/
 ├── requirements.in              # Base dependencies
 ├── requirements.txt             # Compiled dependencies
 └── README.md                    # Project documentation
-

@@ -1,16 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subjects with Studies</title>
-</head>
-<body>
-    <h1>Subjects with Studies</h1>
+{% extends "base.html" %}
+
+{% block title %}Subjects{% endblock %}
+
+{% block content %}
+    <h1>Subjects</h1>
+
+    <!-- List existing subjects with studies -->
+    <h2>Subjects with Studies</h2>
     <ul>
         {% for subject_id in subjects %}
         <li><a href="{{ url_for('studies.list_studies', subject_id=subject_id) }}">{{ subject_id }}</a></li>
         {% endfor %}
     </ul>
-</body>
-</html>
+
+    <!-- Form to initiate studies for a new subject -->
+    <h2>Initiate Studies for a New Subject</h2>
+    <p>If the subject you are looking for is not listed above, you can enter the Subject ID below to initiate their study records. If the Subject ID already exists, you will be directed to their current studies page.</p>
+    <form onsubmit="event.preventDefault(); window.location.href='/studies/' + document.getElementById('subject_id').value;">
+        <label for="subject_id">Subject ID:</label>
+        <input type="text" id="subject_id" name="subject_id" required>
+        <button type="submit">Go to Subject's Studies</button>
+    </form>
+{% endblock %}

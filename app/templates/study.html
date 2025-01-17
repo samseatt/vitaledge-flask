@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study Details</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Study Details{% endblock %}
+
+{% block content %}
     <h1>Study Details</h1>
     <h2>{{ study.study.name }}</h2>
     <p><strong>Summary:</strong> {{ study.study.summary }}</p>
@@ -29,22 +26,39 @@
             <tr>
                 <th>Variant</th>
                 <th>Genotype</th>
+                <th>Gene</th>
                 <th>Effect Size</th>
                 <th>Frequency</th>
                 <th>Significance</th>
+                <th>NIH Search</th>
             </tr>
         </thead>
         <tbody>
             {% for variant in study.variants %}
             <tr>
-                <td>{{ variant.variant }}</td>
+                <td>
+                    <a href="{{ url_for('variants.get_variant_by_name', subject_id=study.patient_id, variant_name=variant.variant.split('_')[0]) }}">
+                        {{ variant.variant }}
+                    </a>
+                </td>
                 <td>{{ variant.genotype }}</td>
-                <td>{{ variant['effect-size'] }}</td>
+                <td>
+                    {% if variant.gene %}
+                        <a href="https://www.ncbi.nlm.nih.gov/gene/?term={{ variant.gene }}" target="_blank">
+                            {{ variant.gene }}
+                        </a>
+                    {% endif %}
+                </td>
+                <td>{{ variant['effect-size'] }} ({{ variant['effect-polarity'] }})</td>
                 <td>{{ variant['variant-frequency'] }}</td>
                 <td>{{ variant.significance }}</td>
-            </tr>
+                <td>
+                    <a href="https://www.ncbi.nlm.nih.gov/snp/?term={{ variant.variant.split('_')[0] }}" target="_blank">
+                        {{ variant.variant.split('_')[0] }}
+                    </a>
+                </td>
+             </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+{% endblock %}

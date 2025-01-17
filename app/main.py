@@ -6,7 +6,7 @@ import logging
 
 # Configure logging
 logging.basicConfig(
-    level=logging.DEBUG,  # Change to logging.INFO or logging.ERROR for less verbosity
+    level=logging.INFO,  # Change to logging.INFO or logging.ERROR for less verbosity
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 

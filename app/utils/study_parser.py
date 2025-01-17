@@ -11,7 +11,7 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
 
     # Remove any carriage return characters that are inserted during form handling
     text = text.replace("\r\n", "\n").replace("\r", "\n").strip()
-    
+
     # print(f"$$$$ known_tags: {known_tags}")
     # # Step 1: Parse "study" details
     # study_match = re.search(r"SHARE\s+(.+?\(\w+, \d{4}\))", text, re.S)
@@ -108,13 +108,19 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
         genotype = variant_lines[j].replace("YOUR ", "").strip()
         logging.debug(f"Genotype: {genotype}")
 
+        gene = None
         # Parse and throw away the GENE column if present
         if ncol == 6:
             j += 1
+            gene = variant_lines[j].strip()
+        
+        logging.debug(f"Gene: {gene}")
 
         # Effect Size: clean special symbols and validate numeric conversion: -0.04 (↓)
         j += 1
-        logging.debug(f"Effect Size String: {variant_lines[j]}")
+        logging.info(f"Effect Size and Polarity: {variant_lines[j]}")
+        effect_polarity = parse_polarity(variant_lines[j])
+        logging.info(f"Effect Polarity: {effect_polarity}")
         effect_size_str = re.sub(r"\s*\(.*?\)", "", variant_lines[j]).strip()
         try:
             effect_size = float(effect_size_str)
@@ -122,7 +128,7 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
             logging.debug(f"Error: ValueError in effect size.")
             effect_size = None  # Set to None if conversion fails
 
-        logging.debug(f"Effect Size: {effect_size}")
+        logging.info(f"Effect Size: {effect_size}")
 
         # Variant Frequency: strip '%' and validate conversion
         j += 1
@@ -144,7 +150,9 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
         variants.append({
             "variant": variant,
             "genotype": genotype,
+            "gene": gene,
             "effect-size": effect_size,
+            "effect-polarity": effect_polarity,
             "variant-frequency": variant_frequency,
             "significance": significance
         })
@@ -160,3 +168,11 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
     # Return JSON structure as a string
     logging.debug(f"Parser successfully parsed the study {result['study']['name']} with {len(result['variants'])} variants")
     return result
+
+def parse_polarity(line):
+    if re.search(r"↑", line):
+        return 1
+    elif re.search(r"↓", line):
+        return -1
+    else:
+        return 0
