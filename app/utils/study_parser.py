@@ -18,9 +18,12 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
     # study_name = unidecode.unidecode(study_match.group(1).strip()) if study_match else None
     
     # Step 1: Parse "study" details
-    study_match = re.search(r"SHARE\s+(.+?\(\w+, \d{4}\))", text, re.S)
+    logging.info(f"text >> {text}\n")
+    # study_match = re.search(r"SHARE\s+(.+?\(\w+, \d{4}\))", text, re.S)
+    study_match = re.search(r"SHARE\s+(.+?\([^\)]+\))", text, re.S)
+    logging.info(f"study_match: {study_match}")
     study_name = unidecode.unidecode(study_match.group(1).strip()) if study_match else None
-    logging.debug(f"Parsed study name: {study_name}")
+    logging.info(f"Parsed study name: {study_name}")
 
     # Step 2: Extract tags/categories based on single-word lines only
     # Look for potential tags between "SHARE" and "STUDY SUMMARY"
@@ -74,8 +77,8 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
     # Find the start of the variants table after "SIGNIFICANCE" label
     ncol = 5    # Set the expected number of columns to parse in the variants table
     headers = ["variant", "genotype", "effect-size", "variant-frequency", "significance"]
-    logging.info(f"Parsing text ...\n")
-    print(repr(text))
+    # logging.info(f"Parsing text ...\n")
+    # print(repr(text))
     variant_table_start = text.find("VARIANT\nYOUR GENOTYPE\nEFFECT SIZE\nVARIANT FREQUENCY\nSIGNIFICANCE")
     if variant_table_start == -1:
         logging.debug(f"5-column variant table not found. Unable to parse")
@@ -118,9 +121,9 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
 
         # Effect Size: clean special symbols and validate numeric conversion: -0.04 (↓)
         j += 1
-        logging.info(f"Effect Size and Polarity: {variant_lines[j]}")
-        effect_polarity = parse_polarity(variant_lines[j])
-        logging.info(f"Effect Polarity: {effect_polarity}")
+        logging.debug(f"Effect Size and Effect: {variant_lines[j]}")
+        effect = parse_effect(variant_lines[j])
+        logging.debug(f"Effect: {effect}")
         effect_size_str = re.sub(r"\s*\(.*?\)", "", variant_lines[j]).strip()
         try:
             effect_size = float(effect_size_str)
@@ -128,7 +131,7 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
             logging.debug(f"Error: ValueError in effect size.")
             effect_size = None  # Set to None if conversion fails
 
-        logging.info(f"Effect Size: {effect_size}")
+        logging.debug(f"Effect Size: {effect_size}")
 
         # Variant Frequency: strip '%' and validate conversion
         j += 1
@@ -152,7 +155,7 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
             "genotype": genotype,
             "gene": gene,
             "effect-size": effect_size,
-            "effect-polarity": effect_polarity,
+            "effect": effect,
             "variant-frequency": variant_frequency,
             "significance": significance
         })
@@ -169,7 +172,7 @@ def parse_nebula_dna_score(patient_id, study_url, text, known_tags=[]):
     logging.debug(f"Parser successfully parsed the study {result['study']['name']} with {len(result['variants'])} variants")
     return result
 
-def parse_polarity(line):
+def parse_effect(line):
     if re.search(r"↑", line):
         return 1
     elif re.search(r"↓", line):
