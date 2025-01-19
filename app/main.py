@@ -1,6 +1,6 @@
 # app/main.py
 from flask import Flask
-from app.routes import studies, variants
+from app.routes import studies, variants, rxgen
 from app.database import init_db
 import logging
 
@@ -21,6 +21,7 @@ init_db(app)
 # Register Blueprints
 app.register_blueprint(studies.bp)
 app.register_blueprint(variants.bp)
+app.register_blueprint(rxgen.bp)
 
 if __name__ == "__main__":
     app.run(debug=True)

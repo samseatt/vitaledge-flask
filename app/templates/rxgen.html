@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Studies for Subject {{ subject_id }}{% endblock %}
+
+{% block content %}
+    <h1>RxGen Pipeline</h1>
+
+    <!-- Form to annotate variants -->
+    <h2>Annotate Variants</h2>
+    <form method="POST" action="{{ url_for('rxgen.rxgen_home') }}">
+        <label for="file_path">File Path:</label>
+        <input type="text" id="file_path" name="file_path" required><br><br>
+
+        <label for="patient_id">Patient ID:</label>
+        <input type="text" id="patient_id" name="patient_id" required><br><br>
+
+        <button type="submit">Annotate</button>
+    </form>
+
+    {% if result %}
+    <h3>Annotation Result</h3>
+    <pre>{{ result | tojson }}</pre>
+    {% endif %}
+
+    <!-- Form to get variant interaction -->
+    <h2>Get Variant Interaction</h2>
+    <form method="GET" action="{{ url_for('rxgen.rxgen_variant_interaction') }}">
+        <label for="variant_id">Variant ID:</label>
+        <input type="text" id="variant_id" name="variant_id" required><br><br>
+
+        <button type="submit">Get Interaction</button>
+    </form>
+
+    {% if interaction %}
+    <h3>Variant Interaction</h3>
+    <pre>{{ interaction | tojson }}</pre>
+    {% endif %}
+
+    {% if error %}
+    <h3 style="color: red;">Error</h3>
+    <p>{{ error }}</p>
+    {% endif %}
+{% endblock %}
+

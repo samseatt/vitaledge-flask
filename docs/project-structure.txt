@@ -7,17 +7,19 @@ vitaledge_flask_ui/
 │   │   ├── studies.html         # Template for displaying all studies for a subject
 │   │   ├── subjects.html        # Template for displaying all subjects with studies
 │   │   ├── variant.html         # Template for displaying a single variant
-│   │   └── variants.html        # Template for displaying and searching variants
+│   │   ├── variants.html        # Template for displaying and searching variants
+│   │   └── rxgen.html           # Template for RxGen interactions
 │   ├── static/                  # Static files (CSS, JS, images)
 │   │   └── style.css            # Generic stylesheet for all HTML templates
 │   ├── routes/                  # Flask routes
 │   │   ├── __init__.py          # Route initializer
 │   │   ├── studies.py           # Routes for study-related views
-│   │   └── variants.py          # Routes for variant-related views
+│   │   ├── variants.py          # Routes for variant-related views
+│   │   └── rxgen.py             # Routes for RxGen pipeline interactions
 │   ├── utils/                   # Utility functions
 │   │   └── serializers.py       # Serializers for MongoDB data
 │   ├── services/                # Business logic services
-│   │   └── studies_service.py   # Service for study handling
+│   │   └── rxgen_service.py     # Service for RxGen interactions
 │   ├── config.py                # Application configuration
 │   ├── main.py                  # Main entry point for the Flask app
 │   ├── database.py              # MongoDB connection setup
