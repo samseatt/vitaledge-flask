@@ -10,6 +10,10 @@ Export the FLASK_APP environment variable, and run Flask with the desired port:
 export FLASK_APP=app.main
 flask run --host=0.0.0.0 --port=5001
 
+docker-compose up --build
+docker-compose down
+
+
 #### Endpoints
 #
 ##############################################################
